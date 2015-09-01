@@ -43,7 +43,7 @@ public class SendJoinApi extends AsyncTask<JoinForm, Void, JSONObject> {
     JSONObject responseJSON;
 
     //    private static final String URL = "http://200.5.40.210:50000/joinData";
-    private static final String URL = "http://192.168.219.175:50000/joinData";
+    private static final String URL = "http://192.168.219.125:50000/joinData";
 
     public SendJoinApi(Context context, Dialog dialog) {
         this.context = context;
@@ -73,9 +73,9 @@ public class SendJoinApi extends AsyncTask<JoinForm, Void, JSONObject> {
             JSONObject jsonObject = new JSONObject();
             Log.i("joinForm length", joinForm.length + "");
             Log.i("joinForm length", joinForm.length + "");
-            Log.i("joinForm 글자수", joinForm[0].getLoginId().length() + "");
+            Log.i("joinForm 글자수", joinForm[0].getUserId().length() + "");
             Log.i("joinForm 글자수", joinForm[0].getPassword().length() + "");
-            jsonObject.put("loginId", joinForm[0].getLoginId());
+            jsonObject.put("userId", joinForm[0].getUserId());
             jsonObject.put("password", joinForm[0].getPassword());
 
             outputStream = httpURLConn.getOutputStream();
@@ -102,7 +102,7 @@ public class SendJoinApi extends AsyncTask<JoinForm, Void, JSONObject> {
                 try {
                     responseJSON = new JSONObject();
                     responseJSON.put("res_mssage", "응답실패");
-                    responseJSON.put("join", false);
+                    responseJSON.put("result", false);
                 } catch (JSONException e1) {
                     e1.printStackTrace();
                 }
@@ -113,7 +113,7 @@ public class SendJoinApi extends AsyncTask<JoinForm, Void, JSONObject> {
             try {
                 responseJSON = new JSONObject();
                 responseJSON.put("res_message", e.toString());
-                responseJSON.put("join", false);
+                responseJSON.put("result", false);
             } catch (JSONException e1) {
                 e1.printStackTrace();
             }
@@ -157,22 +157,19 @@ public class SendJoinApi extends AsyncTask<JoinForm, Void, JSONObject> {
 
     @Override
     protected void onPostExecute(JSONObject responseJSON) {
-        boolean response = false;
+        boolean result = false;
         String message = null;
         try {
-            Log.i("타이밍타이밍", "" + responseJSON.get("join"));
-            response = (boolean) responseJSON.get("join");
+            result = (boolean) responseJSON.get("result");
             message = (String) responseJSON.get("res_message");
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        if (response) {
-            Toast.makeText(context, "정상 작동이다 우하하하"
-                    , Toast.LENGTH_SHORT).show();
+        if (result) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
             //로그인
         } else {
-            Log.i("toast message", message);
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
         }
         dialog.dismiss();

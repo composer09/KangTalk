@@ -39,7 +39,7 @@ public class JoinActivity extends AppCompatActivity {
 
     private void dojoin() {
         JoinForm joinForm = createJoinForm();
-        if (joinForm.getLoginId().length() == 0 || joinForm.getPassword().length() == 0
+        if (joinForm.getUserId().length() == 0 || joinForm.getPassword().length() == 0
                 || joinForm.getPasswordConfirm().length() == 0) {
             Toast.makeText(JoinActivity.this, "모든정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
         } else {
