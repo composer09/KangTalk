@@ -1,4 +1,4 @@
-package kr.co.composer.logintest.ui.progress;
+package kr.co.composer.kangtalk.ui.progress;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -13,7 +13,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import kr.co.composer.logintest.R;
+import kr.co.composer.kangtalk.R;
 
 
 public class CustomLoadingProgress extends Dialog {

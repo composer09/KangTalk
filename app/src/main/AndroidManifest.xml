@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="kr.co.composer.logintest">
+    package="kr.co.composer.kangtalk">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".application.LoginApplication"
+        android:name="kr.co.composer.kangtalk.application.LoginApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.IntroActivity"
+            android:name="kr.co.composer.kangtalk.activity.IntroActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar">
@@ -21,10 +21,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.JoinActivity"
+            android:name="kr.co.composer.kangtalk.activity.JoinActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name="kr.co.composer.kangtalk.activity.ChatActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

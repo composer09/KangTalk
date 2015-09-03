@@ -1,52 +1,43 @@
-package kr.co.composer.logintest.api;
+package kr.co.composer.kangtalk.api;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 
-import kr.co.composer.logintest.bo.JoinForm;
+import kr.co.composer.kangtalk.R;
+import kr.co.composer.kangtalk.activity.ChatActivity;
+import kr.co.composer.kangtalk.activity.JoinActivity;
+import kr.co.composer.kangtalk.bo.JoinForm;
 
 /**
  * Created by composer10 on 2015. 8. 28..
  */
 public class SendJoinApi extends AsyncTask<JoinForm, Void, JSONObject> {
-    Context context;
+    Activity activity;
     Dialog dialog;
     String response;
     JSONObject responseJSON;
 
+    String ip = "192.168.0.12";
     //    private static final String URL = "http://200.5.40.210:50000/joinData";
-    private static final String URL = "http://192.168.219.125:50000/joinData";
+    private String URL = "http://"+ip+":50000/joinData";
 
-    public SendJoinApi(Context context, Dialog dialog) {
-        this.context = context;
+    public SendJoinApi(Activity activity, Dialog dialog) {
+        this.activity = activity;
         this.dialog = dialog;
     }
 
@@ -167,10 +158,20 @@ public class SendJoinApi extends AsyncTask<JoinForm, Void, JSONObject> {
         }
 
         if (result) {
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(activity, ChatActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            activity.startActivity(intent);
+            activity.overridePendingTransition(R.anim.fade, R.anim.hold);
+            activity.finish();
             //로그인
         } else {
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(activity, ChatActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            activity.startActivity(intent);
+            activity.overridePendingTransition(R.anim.fade, R.anim.hold);
+            activity.finish();
         }
         dialog.dismiss();
     }

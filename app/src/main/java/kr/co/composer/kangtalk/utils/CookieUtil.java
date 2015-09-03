@@ -1,10 +1,10 @@
-package kr.co.composer.logintest.utils;
+package kr.co.composer.kangtalk.utils;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import kr.co.composer.logintest.properties.PreferenceProperties;
+import kr.co.composer.kangtalk.properties.PreferenceProperties;
 
 /**
  * Created by composer10 on 2015. 8. 26..

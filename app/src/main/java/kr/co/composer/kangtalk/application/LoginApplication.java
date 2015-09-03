@@ -1,12 +1,7 @@
-package kr.co.composer.logintest.application;
+package kr.co.composer.kangtalk.application;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.ContextWrapper;
-import android.content.SharedPreferences;
-
-import kr.co.composer.logintest.properties.PreferenceProperties;
-import kr.co.composer.logintest.utils.StringUtil;
 
 public class LoginApplication extends Application {
     public static ContextWrapper contextWrapper;

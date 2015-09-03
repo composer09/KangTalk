@@ -1,4 +1,4 @@
-package kr.co.composer.logintest.utils;
+package kr.co.composer.kangtalk.utils;
 
 /**
  * Created by composer10 on 2015. 8. 26..

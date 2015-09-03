@@ -1,4 +1,4 @@
-package kr.co.composer.logintest.activity;
+package kr.co.composer.kangtalk.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,11 +6,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import kr.co.composer.logintest.R;
-import kr.co.composer.logintest.api.SendJoinApi;
-import kr.co.composer.logintest.bo.JoinForm;
-import kr.co.composer.logintest.ui.progress.CustomLoadingProgress;
-import kr.co.composer.logintest.utils.FormUtil;
+import kr.co.composer.kangtalk.R;
+import kr.co.composer.kangtalk.api.SendJoinApi;
+import kr.co.composer.kangtalk.ui.progress.CustomLoadingProgress;
+import kr.co.composer.kangtalk.bo.JoinForm;
+import kr.co.composer.kangtalk.utils.FormUtil;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -47,7 +47,7 @@ public class JoinActivity extends AppCompatActivity {
                 Toast.makeText(JoinActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
             } else {
                 customLoadingProgress.show();
-                new SendJoinApi(JoinActivity.this, customLoadingProgress)
+                new SendJoinApi(this, customLoadingProgress)
                         .execute(joinForm);
             }
         }

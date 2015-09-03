@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "kr.co.composer.logintest"
+        applicationId "kr.co.composer.kangtalk"
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 1
@@ -22,5 +22,4 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.google.code.gson:gson:2.3.1'
 }

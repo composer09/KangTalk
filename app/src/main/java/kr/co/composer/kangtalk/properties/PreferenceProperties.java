@@ -1,4 +1,4 @@
-package kr.co.composer.logintest.properties;
+package kr.co.composer.kangtalk.properties;
 
 
 public class PreferenceProperties {

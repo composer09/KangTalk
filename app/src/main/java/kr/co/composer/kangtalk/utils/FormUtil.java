@@ -1,4 +1,4 @@
-package kr.co.composer.logintest.utils;
+package kr.co.composer.kangtalk.utils;
 
 import android.app.Activity;
 import android.view.View;

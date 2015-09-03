@@ -1,10 +1,9 @@
-package kr.co.composer.logintest.bo.login;
+package kr.co.composer.kangtalk.bo.login;
 
 import android.content.Context;
 
-import kr.co.composer.logintest.application.LoginApplication;
-import kr.co.composer.logintest.utils.CookieUtil;
-import kr.co.composer.logintest.utils.StringUtil;
+import kr.co.composer.kangtalk.utils.StringUtil;
+import kr.co.composer.kangtalk.utils.CookieUtil;
 
 /**
  * Created by composer10 on 2015. 8. 26..

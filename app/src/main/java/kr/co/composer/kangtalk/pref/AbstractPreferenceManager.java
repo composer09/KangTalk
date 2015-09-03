@@ -1,4 +1,4 @@
-package kr.co.composer.logintest.pref;
+package kr.co.composer.kangtalk.pref;
 
 import android.content.Context;
 import android.content.ContextWrapper;

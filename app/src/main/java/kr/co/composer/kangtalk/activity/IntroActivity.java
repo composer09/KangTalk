@@ -1,4 +1,4 @@
-package kr.co.composer.logintest.activity;
+package kr.co.composer.kangtalk.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +11,8 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 
-import kr.co.composer.logintest.R;
-import kr.co.composer.logintest.bo.login.LoginBO;
+import kr.co.composer.kangtalk.R;
+import kr.co.composer.kangtalk.bo.login.LoginBO;
 
 public class IntroActivity extends AppCompatActivity {
     private FragmentManager fManager;
@@ -22,7 +22,7 @@ public class IntroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
+        setContentView(R.layout.activity_intro);
         introView = findViewById(R.id.intro_view);
 
         loginBO = new LoginBO(this);
