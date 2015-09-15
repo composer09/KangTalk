@@ -1,4 +1,4 @@
-package kr.co.composer.kangtalk.bo;
+package kr.co.composer.kangtalk.bo.join;
 
 /**
  * Created by composer10 on 2015. 8. 25..

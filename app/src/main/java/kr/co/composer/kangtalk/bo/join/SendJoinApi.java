@@ -1,8 +1,7 @@
-package kr.co.composer.kangtalk.api;
+package kr.co.composer.kangtalk.bo.join;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -17,11 +16,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 import kr.co.composer.kangtalk.R;
 import kr.co.composer.kangtalk.activity.ChatActivity;
-import kr.co.composer.kangtalk.activity.JoinActivity;
-import kr.co.composer.kangtalk.bo.JoinForm;
+import kr.co.composer.kangtalk.application.LoginApplication;
+import kr.co.composer.kangtalk.bo.join.JoinForm;
+import kr.co.composer.kangtalk.bo.login.LoginBO;
 
 /**
  * Created by composer10 on 2015. 8. 28..
@@ -31,20 +32,26 @@ public class SendJoinApi extends AsyncTask<JoinForm, Void, JSONObject> {
     Dialog dialog;
     String response;
     JSONObject responseJSON;
+    HttpURLConnection httpURLConn = null;
+    LoginApplication loginApplication = null;
+    LoginBO loginBO = null;
 
-    String ip = "192.168.0.12";
+    String ip = "1.241.246.58";
     //    private static final String URL = "http://200.5.40.210:50000/joinData";
-    private String URL = "http://"+ip+":50000/joinData";
+    private String URL = "http://" + ip + ":50000/joinData";
+
+
 
     public SendJoinApi(Activity activity, Dialog dialog) {
         this.activity = activity;
         this.dialog = dialog;
+        loginApplication = new LoginApplication();
+        loginBO = new LoginBO();
     }
 
     @Override
     protected JSONObject doInBackground(JoinForm... joinForm) {
         URL url = null;
-        HttpURLConnection httpURLConn = null;
         OutputStream outputStream = null;
         InputStream inputStream = null;
         ByteArrayOutputStream byteArrayOutputStream = null;
@@ -62,17 +69,15 @@ public class SendJoinApi extends AsyncTask<JoinForm, Void, JSONObject> {
             httpURLConn.setDoInput(true);
 
             JSONObject jsonObject = new JSONObject();
-            Log.i("joinForm length", joinForm.length + "");
-            Log.i("joinForm length", joinForm.length + "");
-            Log.i("joinForm 글자수", joinForm[0].getUserId().length() + "");
-            Log.i("joinForm 글자수", joinForm[0].getPassword().length() + "");
             jsonObject.put("userId", joinForm[0].getUserId());
             jsonObject.put("password", joinForm[0].getPassword());
 
             outputStream = httpURLConn.getOutputStream();
             outputStream.write(jsonObject.toString().getBytes());
-
+            outputStream.flush();
+            outputStream.close();
             if (httpURLConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+
                 inputStream = httpURLConn.getInputStream();
                 byteArrayOutputStream = new ByteArrayOutputStream();
                 byte[] byteBuffer = new byte[1024];
@@ -81,8 +86,10 @@ public class SendJoinApi extends AsyncTask<JoinForm, Void, JSONObject> {
                 while ((nLength = inputStream.read(byteBuffer, 0, byteBuffer.length)) != -1) {
                     byteArrayOutputStream.write(byteBuffer, 0, nLength);
                 }
+                inputStream.close();
                 byteData = byteArrayOutputStream.toByteArray();
-
+                byteArrayOutputStream.flush();
+                byteArrayOutputStream.close();
                 response = new String(byteData);
 
                 JSONObject responseJSON = new JSONObject(response);
@@ -111,36 +118,14 @@ public class SendJoinApi extends AsyncTask<JoinForm, Void, JSONObject> {
             return responseJSON;
         } catch (Exception e) {
             e.printStackTrace();
-            Log.i("exception", "gogogogogogogogog");
-            return null;
-        } finally {
-            if (url != null) {
-                url = null;
-            }
-
-            if (httpURLConn != null) {
-                httpURLConn.disconnect();
-
-            }
-
             try {
-                if (outputStream != null) {
-                    outputStream.flush();
-                    outputStream.close();
-                }
-
-                if (inputStream != null) {
-                    inputStream.close();
-                }
-                if (byteArrayOutputStream != null) {
-                    byteArrayOutputStream.flush();
-                    byteArrayOutputStream.close();
-                }
-
-            } catch (IOException e) {
-
+                responseJSON = new JSONObject();
+                responseJSON.put("res_message", e.toString());
+                responseJSON.put("result", false);
+            } catch (JSONException e1) {
+                e1.printStackTrace();
             }
-
+            return responseJSON;
         }
 
     }
@@ -148,31 +133,37 @@ public class SendJoinApi extends AsyncTask<JoinForm, Void, JSONObject> {
 
     @Override
     protected void onPostExecute(JSONObject responseJSON) {
-        boolean result = false;
-        String message = null;
         try {
-            result = (boolean) responseJSON.get("result");
-            message = (String) responseJSON.get("res_message");
+            if ((boolean) responseJSON.get("result")) {
+                Toast.makeText(activity, (String) responseJSON.get("res_message"), Toast.LENGTH_SHORT).show();
+
+//                List<String> cookies = httpURLConn.getHeaderFields().get("set-cookie");
+//                if (cookies != null) {
+//                    for (String cookie : cookies) {
+//                        Log.d("쿠키확인", cookie.split(";")[0]);
+//                    }
+//                }
+//                loginBO.extractCookie(httpURLConn);
+
+            Intent intent = new Intent(activity, ChatActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            activity.startActivity(intent);
+            activity.overridePendingTransition(R.anim.fade, R.anim.hold);
+            activity.finish();
+            } else {
+                Toast.makeText(activity, (String) responseJSON.get("res_message"), Toast.LENGTH_SHORT).show();
+//                List<String> cookies = httpURLConn.getHeaderFields().get("set-cookie");
+//                if (cookies != null) {
+//                    for (String cookie : cookies) {
+//                        Log.d("쿠키확인", cookie.split(";")[0]);
+//                    }
+//                }
+//                loginBO.extractCookie(httpURLConn);
+//                Log.i("프리퍼런스에 저장", loginApplication.getRememberMeCookie());
+            }
+            dialog.dismiss();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        if (result) {
-            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(activity, ChatActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            activity.startActivity(intent);
-            activity.overridePendingTransition(R.anim.fade, R.anim.hold);
-            activity.finish();
-            //로그인
-        } else {
-            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(activity, ChatActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            activity.startActivity(intent);
-            activity.overridePendingTransition(R.anim.fade, R.anim.hold);
-            activity.finish();
-        }
-        dialog.dismiss();
     }
 }

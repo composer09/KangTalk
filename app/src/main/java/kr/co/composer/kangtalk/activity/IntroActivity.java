@@ -12,12 +12,17 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 
 import kr.co.composer.kangtalk.R;
+import kr.co.composer.kangtalk.application.LoginApplication;
 import kr.co.composer.kangtalk.bo.login.LoginBO;
+import kr.co.composer.kangtalk.ui.progress.CustomLoadingProgress;
+import kr.co.composer.kangtalk.volley_test.VolleyTest;
 
-public class IntroActivity extends AppCompatActivity {
+public class IntroActivity extends BaseActivity {
     private FragmentManager fManager;
     private LoginBO loginBO;
+    private LoginApplication loginApplication;
     private View introView;
+    private CustomLoadingProgress customLoadingProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +30,8 @@ public class IntroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_intro);
         introView = findViewById(R.id.intro_view);
 
-        loginBO = new LoginBO(this);
+        customLoadingProgress = new CustomLoadingProgress(this);
+        loginApplication = new LoginApplication();
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
@@ -44,8 +50,6 @@ public class IntroActivity extends AppCompatActivity {
         }.execute(new Void[0]);
 
 
-
-
 //        fManager = getSupportFragmentManager();
 //        FragmentTransaction fTransaction = fManager.beginTransaction();
 //        if(fTransaction.isEmpty()){
@@ -54,32 +58,28 @@ public class IntroActivity extends AppCompatActivity {
     }
 
     private void loginTask() {
-        if (loginBO.hasRememberMeCookie() == true) {
-//            loadingbigfoot.show();
-//            login();
+        if (loginApplication.hasRememberMeCookie() == true) {
+            customLoadingProgress.show();
+            login();
         } else {
-            redirectAndFinish(this);
-//            Intent intent = new Intent(this, IntroActivity.class);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//            startActivity(intent);
-//            overridePendingTransition(R.anim.fade, R.anim.hold);
-//            finish();
+            redirectAndFinish(IntroActivity.this, JoinActivity.class);
         }
     }
 
+    private void login(){
+        // 자동로그인쿠키 갱신과 유저정보 얻어오기 구현
+        new VolleyTest(IntroActivity.this,customLoadingProgress).autoLogin();
+    }
 
-    public void redirectAndFinish(final Context context) {
+    @Override
+    public void redirectAndFinish(final Context context,
+                                  final Class redirectActivity) {
         introView.setVisibility(View.GONE);
         fadeOut(introView, new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd(Animation animation) {
-                Intent intent = new Intent(context, JoinActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                overridePendingTransition(R.anim.fade, R.anim.hold);
-                finish();
-//                IntroActivity.super
-//                        .redirectAndFinish(context, redirectActivity);
+                IntroActivity.super
+                        .redirectAndFinish(context, redirectActivity);
             }
 
             @Override
@@ -96,6 +96,7 @@ public class IntroActivity extends AppCompatActivity {
 
         });
     }
+
 
 
     private void fadeOut(View view, Animation.AnimationListener animationListener) {

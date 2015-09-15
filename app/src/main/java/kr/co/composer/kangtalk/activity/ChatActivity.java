@@ -1,8 +1,12 @@
 package kr.co.composer.kangtalk.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,18 +14,19 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import kr.co.composer.kangtalk.R;
-import kr.co.composer.kangtalk.chat.ChatAdapter;
+import kr.co.composer.kangtalk.adapter.ChatAdapter;
 import kr.co.composer.kangtalk.chat.ChatMessage;
 
 /**
  * Created by composer10 on 2015. 9. 3..
  */
-public class ChatActivity extends ActionBarActivity {
+public class ChatActivity extends BaseActivity {
 
     private EditText messageET;
     private ListView messagesContainer;
@@ -31,20 +36,22 @@ public class ChatActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        actList.add(this); // 액티비티 일괄제거용 미리등록
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_activity);
         initControls();
     }
+
 
     private void initControls() {
         messagesContainer = (ListView) findViewById(R.id.messagesContainer);
         messageET = (EditText) findViewById(R.id.messageEdit);
         sendBtn = (Button) findViewById(R.id.chatSendButton);
 
-        TextView meLabel = (TextView) findViewById(R.id.meLbl);
-        TextView companionLabel = (TextView) findViewById(R.id.friendLabel);
+        TextView myName = (TextView) findViewById(R.id.my_name);
+        TextView yourName = (TextView) findViewById(R.id.your_name);
         RelativeLayout container = (RelativeLayout) findViewById(R.id.container);
-        companionLabel.setText("My Buddy");// Hard Coded
+        yourName.setText("상대방");// Hard Coded
         loadDummyHistory();
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
@@ -102,5 +109,22 @@ public class ChatActivity extends ActionBarActivity {
             ChatMessage message = chatHistory.get(i);
             displayMessage(message);
         }
+
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_chat, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.chat_config:
+                Intent intent = new Intent(this,ConfigActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -23,11 +23,20 @@
         <activity
             android:name="kr.co.composer.kangtalk.activity.JoinActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="stateVisible" />
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
         <activity
             android:name="kr.co.composer.kangtalk.activity.ChatActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ConfigActivity"
+            android:label="@string/config"
+            android:screenOrientation="portrait" />
+        <!--<receiver android:name="kr.co.composer.callrecord.callbroadcast.CallBroadcast">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.NEW_OUTGOING_CALL" />-->
+        <!--<action android:name="android.intent.action.PHONE_STATE" />-->
+        <!--</intent-filter>-->
+        <!--</receiver>-->
     </application>
 
 </manifest>

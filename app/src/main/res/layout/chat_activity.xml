@@ -36,7 +36,7 @@
             android:layout_above="@+id/messageEdit"
             android:layout_alignParentLeft="false"
             android:layout_alignParentTop="false"
-            android:layout_below="@+id/meLbl"
+            android:layout_below="@+id/your_name"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="10dp"
             android:divider="@null"
@@ -44,20 +44,20 @@
             android:transcriptMode="alwaysScroll" />
 
         <TextView
-            android:id="@+id/meLbl"
+            android:id="@+id/your_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"
             android:singleLine="false"
-            android:text="MySelf"
+            android:text=""
             android:textSize="20dp" />
 
         <TextView
-            android:id="@+id/friendLabel"
+            android:id="@+id/my_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="Friend"
+            android:text=""
             android:textSize="20dp" />
 
     </RelativeLayout>

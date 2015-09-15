@@ -17,76 +17,76 @@ import kr.co.composer.kangtalk.R;
 
 
 public class CustomLoadingProgress extends Dialog {
-	public CustomLoadingProgress(Context context) {
-		super(context, R.style.TransparentDialog);
-		init(context);
-	}
+    public CustomLoadingProgress(Context context) {
+        super(context, R.style.TransparentDialog);
+        init(context);
+    }
 
-	protected CustomLoadingProgress(Context context, boolean cancelable,
-									OnCancelListener cancelListener) {
-		super(context, cancelable, cancelListener);
-		init(context);
-	}
+    protected CustomLoadingProgress(Context context, boolean cancelable,
+                                    OnCancelListener cancelListener) {
+        super(context, cancelable, cancelListener);
+        init(context);
+    }
 
-	public CustomLoadingProgress(Context context, int theme) {
-		super(context, theme);
-		init(context);
-	}
-	
-	private static final String color = "#33000000";
+    public CustomLoadingProgress(Context context, int theme) {
+        super(context, theme);
+        init(context);
+    }
 
-	private ImageView imageView;
-	private TextView loading;
-	private AnimationDrawable animation;
-	View view;
-	
+    private static final String color = "#33000000";
 
-	/**
-	 * Loads the layout and sets the initial set of images
-	 */
-	private void init(Context context) {
-		
-		LayoutInflater inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		
-		view = inflater.inflate(R.layout.loading_progress, null);
-		super.addContentView(view, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-		
-		imageView = (ImageView) view.findViewById(R.id.imgOne);
-		imageView.setBackgroundResource(R.anim.loading_progress);
-		animation = (AnimationDrawable) imageView.getBackground();
-		
-		loading = (TextView)view.findViewById(R.id.loading);
-		
-		
-		view.setBackgroundColor(Color.parseColor(color)); //다이아로그 배경
+    private ImageView imageView;
+    private TextView loading;
+    private AnimationDrawable animation;
+    View view;
+
+
+    /**
+     * Loads the layout and sets the initial set of images
+     */
+    private void init(Context context) {
+
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        view = inflater.inflate(R.layout.loading_progress, null);
+        super.addContentView(view, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+
+        imageView = (ImageView) view.findViewById(R.id.imgOne);
+        imageView.setBackgroundResource(R.anim.loading_progress);
+        animation = (AnimationDrawable) imageView.getBackground();
+
+        loading = (TextView) view.findViewById(R.id.loading);
+
+
+        view.setBackgroundColor(Color.parseColor(color)); //다이아로그 배경
 //		loading.setText("로그인 중..");
-	}
-	
-	public void show() {
-		super.show();
-		animation.start();
-	}
+    }
 
-	/**
-	 * This is called when you want the dialog to be dismissed
-	 */
-	public void dismiss() {
-		animation.stop();
-		recycleBitmap(imageView);
-		super.dismiss();		
-	}
+    public void show() {
+        super.show();
+        animation.start();
+    }
 
-	private void recycleBitmap(ImageView iv) {
-		try {
-			Drawable d = iv.getDrawable();
-			if (d instanceof BitmapDrawable) {
-				Bitmap b = ((BitmapDrawable) d).getBitmap();
-				b.recycle();
-			}
-			d.setCallback(null);
-		} catch (Exception e) {
-		}
-	}
+    /**
+     * This is called when you want the dialog to be dismissed
+     */
+    public void dismiss() {
+        animation.stop();
+        recycleBitmap(imageView);
+        super.dismiss();
+    }
+
+    private void recycleBitmap(ImageView iv) {
+        try {
+            Drawable d = iv.getDrawable();
+            if (d instanceof BitmapDrawable) {
+                Bitmap b = ((BitmapDrawable) d).getBitmap();
+                b.recycle();
+            }
+            d.setCallback(null);
+        } catch (Exception e) {
+        }
+    }
 
 }

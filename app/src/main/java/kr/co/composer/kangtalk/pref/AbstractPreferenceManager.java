@@ -87,4 +87,13 @@ public class AbstractPreferenceManager {
     }
 
 
+    public boolean removeValue(String key) {
+        if (mPreference != null) {
+            SharedPreferences.Editor editor = mPreference.edit();
+            editor.remove(key);
+            return editor.commit();
+        }
+        return false;
+    }
+
 }

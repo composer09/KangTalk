@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">LoginTest</string>
+    <string name="config">Config</string>
+    <string name="logout_message">"자동로그인을 해제하시겠습니까?"</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 </resources>
