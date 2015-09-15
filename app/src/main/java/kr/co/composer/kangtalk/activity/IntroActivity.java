@@ -1,11 +1,9 @@
 package kr.co.composer.kangtalk.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -28,6 +26,7 @@ public class IntroActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
+        actList.add(this);
         introView = findViewById(R.id.intro_view);
 
         customLoadingProgress = new CustomLoadingProgress(this);
@@ -62,7 +61,7 @@ public class IntroActivity extends BaseActivity {
             customLoadingProgress.show();
             login();
         } else {
-            redirectAndFinish(IntroActivity.this, JoinActivity.class);
+            redirectAndFinish(IntroActivity.this, LoginActivity.class);
         }
     }
 

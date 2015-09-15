@@ -21,9 +21,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="kr.co.composer.kangtalk.activity.JoinActivity"
+            android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".activity.JoinActivityBak"
+            android:screenOrientation="portrait" />
         <activity
             android:name="kr.co.composer.kangtalk.activity.ChatActivity"
             android:screenOrientation="portrait" />

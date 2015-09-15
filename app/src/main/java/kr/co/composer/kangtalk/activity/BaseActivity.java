@@ -15,11 +15,10 @@ import kr.co.composer.kangtalk.R;
 public class BaseActivity extends AppCompatActivity {
     public static ArrayList<Activity> actList = new ArrayList<Activity>();
 
-    public void startAndFinish(Context context, Class nextActivity) {
+    public void redirectActivity(Context context, Class nextActivity) {
         Intent intent = new Intent(context, nextActivity);
         startActivity(intent);
         overridePendingTransition(R.anim.fade, R.anim.hold);
-        finish();
     }
 
     public void redirectAndFinish(final Context context,final Class redirectActivity) {

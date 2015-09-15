@@ -69,6 +69,7 @@ public class VolleyTest {
         RequestQueue queue = Volley.newRequestQueue(activity.getApplicationContext());
         StringRequest request = new StringRequest(Method.POST, url, autoSuccessListener()
                 , autoErrorListener()) {
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> hash = new HashMap<String, String>();
@@ -76,14 +77,12 @@ public class VolleyTest {
                 return hash;
             }
 
-
-
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 if (response.headers.get("Set-Cookie") != null) {
-                    Log.i("response 헤더확인 : ", response.headers + "");
+                    Log.i("오토로그인 헤더확인 : ", response.headers + "");
                     cookie = response.headers.get("Set-Cookie");
-                    loginApplication.setRememberMeCookie(cookie);
+                    loginApplication.setRememberMeCookie(splitCookie(cookie));
                 }
                 return super.parseNetworkResponse(response);
             }
@@ -91,6 +90,36 @@ public class VolleyTest {
         queue.add(request);
     }
 
+    public void login(JoinForm joinForm) {
+        String url = "http://1.241.246.238:50000/login";
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("userId", joinForm.getUserId());
+            jsonObject.put("password", joinForm.getPassword());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RequestQueue queue = Volley.newRequestQueue(activity.getApplicationContext());
+        JsonObjectRequest request = new JsonObjectRequest(Method.POST, url, jsonObject, joinSuccessListener(), reqErrorListener()) {
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                if (response.headers.get("Set-Cookie") != null) {
+                    Log.i("response 헤더확인 : ", response.headers + "");
+                    cookie = response.headers.get("Set-Cookie");
+                }
+                Log.i("response 상태코드", response.statusCode + "");
+                return super.parseNetworkResponse(response);
+            }
+
+        };
+        queue.add(request);
+    }
 
     public void join(JoinForm joinForm) {
         String url = "http://1.241.246.238:50000/join";
@@ -155,8 +184,6 @@ public class VolleyTest {
                             String rememberCookie = splitCookie(cookie);
                             loginApplication.setRememberMeCookie(rememberCookie);
                             UserPreferenceManager.getInstance().setRemoteUserInfo(response);
-                            Log.i("저장된 쿠키", loginApplication.getRememberMeCookie());
-                            Log.i("저장된 유저아이", UserPreferenceManager.getInstance().getUserId());
                             Toast.makeText(activity, (String) response.get("res_message"), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(activity, ChatActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -174,6 +201,7 @@ public class VolleyTest {
             }
         };
     }
+
     private ErrorListener autoErrorListener() {
         return new ErrorListener() {
             @Override

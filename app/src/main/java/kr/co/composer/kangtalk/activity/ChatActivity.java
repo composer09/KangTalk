@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,7 @@ import java.util.Date;
 import kr.co.composer.kangtalk.R;
 import kr.co.composer.kangtalk.adapter.ChatAdapter;
 import kr.co.composer.kangtalk.chat.ChatMessage;
+import kr.co.composer.kangtalk.pref.UserPreferenceManager;
 
 /**
  * Created by composer10 on 2015. 9. 3..
@@ -40,6 +42,7 @@ public class ChatActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_activity);
         initControls();
+        Log.i("로그인 유저 확인", UserPreferenceManager.getInstance().getUserId());
     }
 
 

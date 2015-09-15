@@ -4,12 +4,13 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
+        android:id="@+id/loginFormContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true">
 
         <EditText
-            android:id="@+id/joinFormEmail"
+            android:id="@+id/loginFormEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -19,10 +20,10 @@
             android:singleLine="true" />
 
         <EditText
-            android:id="@+id/joinFormpassword"
+            android:id="@+id/loginFormpassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/joinFormEmail"
+            android:layout_below="@+id/loginFormEmail"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:hint="비밀번호 6~14자리"
@@ -30,27 +31,36 @@
             android:singleLine="true"
             android:layout_marginTop="10dp" />
 
-        <EditText
-            android:id="@+id/joinFormPasswordConfirm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/joinFormpassword"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
-            android:hint="비밀번호 확인"
-            android:inputType="textPassword"
-            android:singleLine="true" />
-
         <Button
-            android:id="@+id/submit_btn"
+            android:id="@+id/login_submit_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/joinFormPasswordConfirm"
+            android:layout_below="@+id/loginFormpassword"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="15dp"
-            android:text="가입하기" />
+            android:text="로그인" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/loginFormContainer">
+        <TextView
+            android:id="@+id/joinToText"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+            android:text="처음이십니까?"/>
+        <Button
+            android:id="@+id/goJoinBtn"
+            android:layout_below="@+id/joinToText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="회원가입"/>
     </RelativeLayout>
 </RelativeLayout>
