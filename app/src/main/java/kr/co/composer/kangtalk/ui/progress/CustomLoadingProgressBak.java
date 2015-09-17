@@ -49,18 +49,26 @@ public class CustomLoadingProgressBak extends Dialog {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        view = inflater.inflate(R.layout.loading_progress_bak, null);
+        view = inflater.inflate(R.layout.loading_progress, null);
         super.addContentView(view, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
+
+        ///////////
         imageView = (ImageView) view.findViewById(R.id.imgOne);
-        imageView.setBackgroundResource(R.anim.loading_progress);
-        animation = (AnimationDrawable) imageView.getBackground();
-
-        loading = (TextView) view.findViewById(R.id.loading);
-
-
+        animation = (AnimationDrawable) imageView.getDrawable();
         view.setBackgroundColor(Color.parseColor(color)); //다이아로그 배경
-//		loading.setText("로그인 중..");
+
+
+        ///////////
+//        imageView = (ImageView) view.findViewById(R.id.imgOne);
+//        imageView.setBackgroundResource(R.anim.run_progress);
+//        animation = (AnimationDrawable) imageView.getBackground();
+//
+////        loading = (TextView) view.findViewById(R.id.loading);
+//
+//
+//        view.setBackgroundColor(Color.parseColor(color)); //다이아로그 배경
+////		loading.setText("로그인 중..");
     }
 
     public void show() {

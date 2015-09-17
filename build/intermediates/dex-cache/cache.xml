@@ -2,39 +2,25 @@
 <items version="2" >
 
     <item
-        jar="/Users/composer10/.gradle/caches/modules-2/files-2.1/com.mcxiaoke.volley/library/1.0.19/a8f23f65fc1e522ee4a1a697ee569901a46741fa/library-1.0.19.jar"
+        jar="/Users/composer10/.gradle/caches/modules-2/files-2.1/org.java-websocket/Java-WebSocket/1.3.0/db2658f013fb163de4a99274c2eb9e17efe535d2/Java-WebSocket-1.3.0.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="a8f23f65fc1e522ee4a1a697ee569901a46741fa">
-        <dex dex="/Users/composer10/MyFolder/Dropbox/AndroidStudioProjects/KangTalk/app/build/intermediates/pre-dexed/debug/library-1.0.19-a942009dc6ad9bac4768e7fc8950a61fe8898539.jar" />
+        sha1="db2658f013fb163de4a99274c2eb9e17efe535d2">
+        <dex dex="/Users/composer10/MyFolder/Dropbox/AndroidStudioProjects/KangTalk/app/build/intermediates/pre-dexed/debug/Java-WebSocket-1.3.0-478f2da01aea25fdbb1c81fef8a207a4c0e47ba5.jar" />
     </item>
     <item
-        jar="/Users/composer10/MyFolder/Dropbox/AndroidStudioProjects/KangTalk/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/jars/classes.jar"
+        jar="/Users/composer10/.gradle/caches/modules-2/files-2.1/com.github.nkzawa/engine.io-client/0.3.1/3ca9d0d53a27ecb88538ed874be417cfa827db5d/engine.io-client-0.3.1.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
-        <dex dex="/Users/composer10/MyFolder/Dropbox/AndroidStudioProjects/KangTalk/app/build/intermediates/pre-dexed/debug/classes-e6a1e2d2f7ab359cc1b8d8ee8249e6cec919ada2.jar" />
+        sha1="3ca9d0d53a27ecb88538ed874be417cfa827db5d">
+        <dex dex="/Users/composer10/MyFolder/Dropbox/AndroidStudioProjects/KangTalk/app/build/intermediates/pre-dexed/debug/engine.io-client-0.3.1-0b88567381676b9c368037395d6d72af8f0362cc.jar" />
     </item>
     <item
-        jar="/Users/composer10/MyFolder/Dropbox/AndroidStudioProjects/KangTalk/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars/classes.jar"
+        jar="/Users/composer10/.gradle/caches/modules-2/files-2.1/com.github.nkzawa/socket.io-client/0.3.0/8dfd7cf8d1124acb027b3ffd53eafcc518af3ba9/socket.io-client-0.3.0.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="f8efd0096475e0daf054267b61544e10dc776503">
-        <dex dex="/Users/composer10/MyFolder/Dropbox/AndroidStudioProjects/KangTalk/app/build/intermediates/pre-dexed/debug/classes-260df41d8c6ff1ca413ae76548b98056db280c5c.jar" />
-    </item>
-    <item
-        jar="/Users/composer10/MyFolder/Dropbox/AndroidStudioProjects/KangTalk/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars/libs/internal_impl-22.2.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
-        <dex dex="/Users/composer10/MyFolder/Dropbox/AndroidStudioProjects/KangTalk/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.1-3a6a59f09894a98a8111d1f0a31c9dbadd45ce8a.jar" />
-    </item>
-    <item
-        jar="/Users/composer10/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.1/support-annotations-22.2.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="61a0ff5c29295ec56d7e0bd3d25d95dbf71b4b2b">
-        <dex dex="/Users/composer10/MyFolder/Dropbox/AndroidStudioProjects/KangTalk/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.1-9dd51fabcccd117f801a7c7228635479caaf041d.jar" />
+        sha1="8dfd7cf8d1124acb027b3ffd53eafcc518af3ba9">
+        <dex dex="/Users/composer10/MyFolder/Dropbox/AndroidStudioProjects/KangTalk/app/build/intermediates/pre-dexed/debug/socket.io-client-0.3.0-1eb3f0e86817b9da9051880943f8c850a25a664d.jar" />
     </item>
 
 </items>

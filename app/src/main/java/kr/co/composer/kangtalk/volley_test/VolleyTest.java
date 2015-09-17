@@ -44,6 +44,7 @@ import kr.co.composer.kangtalk.bo.join.JoinForm;
 import kr.co.composer.kangtalk.bo.login.LoginBO;
 import kr.co.composer.kangtalk.pref.UserPreferenceManager;
 import kr.co.composer.kangtalk.properties.PreferenceProperties;
+import kr.co.composer.kangtalk.ui.progress.CustomLoading;
 
 import static com.android.volley.Request.Method.*;
 
@@ -51,21 +52,21 @@ import static com.android.volley.Request.Method.*;
  * Created by composer10 on 2015. 8. 28..
  */
 public class VolleyTest {
+    final static String IP_ADDRESS = PreferenceProperties.IP_ADDRESS_SERVER;
     String cookie;
     //
     Activity activity;
-    Dialog dialog;
-    String response;
+    CustomLoading dialog;
     LoginApplication loginApplication = null;
 
-    public VolleyTest(Activity activity, Dialog dialog) {
+    public VolleyTest(Activity activity, CustomLoading dialog) {
         this.activity = activity;
         this.dialog = dialog;
         loginApplication = new LoginApplication();
     }
 
     public void autoLogin() {
-        String url = "http://1.241.246.238:50000/auto_login";
+        String url = IP_ADDRESS+"/auto_login";
         RequestQueue queue = Volley.newRequestQueue(activity.getApplicationContext());
         StringRequest request = new StringRequest(Method.POST, url, autoSuccessListener()
                 , autoErrorListener()) {
@@ -91,7 +92,7 @@ public class VolleyTest {
     }
 
     public void login(JoinForm joinForm) {
-        String url = "http://1.241.246.238:50000/login";
+        String url = IP_ADDRESS+"/login";
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("userId", joinForm.getUserId());
@@ -122,7 +123,7 @@ public class VolleyTest {
     }
 
     public void join(JoinForm joinForm) {
-        String url = "http://1.241.246.238:50000/join";
+        String url = IP_ADDRESS+"/join";
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("userId", joinForm.getUserId());

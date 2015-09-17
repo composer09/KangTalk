@@ -14,8 +14,17 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +33,7 @@ import kr.co.composer.kangtalk.R;
 import kr.co.composer.kangtalk.adapter.ChatAdapter;
 import kr.co.composer.kangtalk.chat.ChatMessage;
 import kr.co.composer.kangtalk.pref.UserPreferenceManager;
+import kr.co.composer.kangtalk.properties.PreferenceProperties;
 
 /**
  * Created by composer10 on 2015. 9. 3..
@@ -35,16 +45,55 @@ public class ChatActivity extends BaseActivity {
     private Button sendBtn;
     private ChatAdapter adapter;
     private ArrayList<ChatMessage> chatHistory;
+    //////////////
+    private Socket mSocket;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         actList.add(this); // 액티비티 일괄제거용 미리등록
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_activity);
+        try {
+            mSocket = IO.socket(PreferenceProperties.IP_ADDRESS_SOCKET);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        mSocket.connect();
+        mSocket.on("serverMessage",onNewMessage);
+        //////////////////////////////
         initControls();
         Log.i("로그인 유저 확인", UserPreferenceManager.getInstance().getUserId());
     }
 
+    private Emitter.Listener onNewMessage = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+//            JSONObject data = (JSONObject) args[0];
+
+            ChatActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.i("통신 데이터확인",args[0]+"");
+                    show((String)args[0]);
+//                    JSONObject data = (JSONObject) args[0];
+//                    String username;
+//                    String message;
+
+//                        username = data.getString("username");
+//                        message = data.getString("message");
+
+
+                    // add the message to view
+//                    addMessage(username, message);
+                }
+            });
+        }
+    };
+
+    private void show(String s){
+        Toast.makeText(this,s,Toast.LENGTH_SHORT).show();
+    }
 
     private void initControls() {
         messagesContainer = (ListView) findViewById(R.id.messagesContainer);
@@ -60,10 +109,13 @@ public class ChatActivity extends BaseActivity {
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 String messageText = messageET.getText().toString();
                 if (TextUtils.isEmpty(messageText)) {
                     return;
                 }
+                mSocket.emit("clientMessage",messageText);
 
                 ChatMessage chatMessage = new ChatMessage();
                 chatMessage.setId(122);//dummy

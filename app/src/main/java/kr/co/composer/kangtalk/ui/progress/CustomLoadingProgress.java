@@ -11,15 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import kr.co.composer.kangtalk.R;
 
 
 public class CustomLoadingProgress extends Dialog {
-    ProgressBar progressBar;
-
     public CustomLoadingProgress(Context context) {
         super(context, R.style.TransparentDialog);
         init(context);
@@ -55,30 +52,36 @@ public class CustomLoadingProgress extends Dialog {
         view = inflater.inflate(R.layout.loading_progress, null);
         super.addContentView(view, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
-//        imageView = (ImageView) view.findViewById(R.id.imgOne);
-//        imageView.setBackgroundResource(R.anim.loading_progress_bak);
-//        animation = (AnimationDrawable) imageView.getBackground();
 
-//        loading = (TextView) view.findViewById(R.id.loading);
-
-        progressBar = (ProgressBar)view.findViewById(R.id.customProgress);
-
+        ///////////
+        imageView = (ImageView) view.findViewById(R.id.imgOne);
+        animation = (AnimationDrawable) imageView.getDrawable();
         view.setBackgroundColor(Color.parseColor(color)); //다이아로그 배경
-//		loading.setText("로그인 중..");
+
+
+        ///////////
+//        imageView = (ImageView) view.findViewById(R.id.imgOne);
+//        imageView.setBackgroundResource(R.anim.run_progress);
+//        animation = (AnimationDrawable) imageView.getBackground();
+//
+////        loading = (TextView) view.findViewById(R.id.loading);
+//
+//
+//        view.setBackgroundColor(Color.parseColor(color)); //다이아로그 배경
+////		loading.setText("로그인 중..");
     }
 
     public void show() {
         super.show();
-        progressBar.setProgress(0);
-//        animation.start();
+        animation.start();
     }
 
     /**
      * This is called when you want the dialog to be dismissed
      */
     public void dismiss() {
-//        animation.stop();
-//        recycleBitmap(imageView);
+        animation.stop();
+        recycleBitmap(imageView);
         super.dismiss();
     }
 

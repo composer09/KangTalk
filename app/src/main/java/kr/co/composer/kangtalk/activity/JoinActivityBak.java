@@ -11,6 +11,7 @@ import android.widget.Toast;
 import kr.co.composer.kangtalk.R;
 import kr.co.composer.kangtalk.bo.join.JoinForm;
 import kr.co.composer.kangtalk.bo.join.SendJoinApi;
+import kr.co.composer.kangtalk.ui.progress.CustomLoading;
 import kr.co.composer.kangtalk.ui.progress.CustomLoadingProgress;
 import kr.co.composer.kangtalk.utils.FormUtil;
 import kr.co.composer.kangtalk.volley_test.VolleyTest;
@@ -19,7 +20,8 @@ import kr.co.composer.kangtalk.volley_test.VolleyTest;
  * A placeholder fragment containing a simple view.
  */
 public class JoinActivityBak extends BaseActivity {
-    CustomLoadingProgress customLoadingProgress;
+    CustomLoading customLoading;
+
 
 
     @Override
@@ -34,7 +36,7 @@ public class JoinActivityBak extends BaseActivity {
         //액션바 홈버튼
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        customLoadingProgress = new CustomLoadingProgress(JoinActivityBak.this);
+        customLoading = new CustomLoading(JoinActivityBak.this);
         Button submitBtn = (Button) findViewById(R.id.join_submit_btn);
         submitBtn.setOnClickListener(
                 new View.OnClickListener() {
@@ -56,8 +58,8 @@ public class JoinActivityBak extends BaseActivity {
             if (!joinForm.getPassword().equals(joinForm.getPasswordConfirm())) {
                 Toast.makeText(this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
             } else {
-                customLoadingProgress.show();
-                new VolleyTest(this,customLoadingProgress).join(joinForm);
+                customLoading.show();
+                new VolleyTest(this,customLoading).join(joinForm);
             }
         }
     }
@@ -91,9 +93,9 @@ public class JoinActivityBak extends BaseActivity {
             if (!joinForm.getPassword().equals(joinForm.getPasswordConfirm())) {
                 Toast.makeText(this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
             } else {
-                customLoadingProgress.show();
-                new SendJoinApi(this, customLoadingProgress)
-                        .execute(joinForm);
+                customLoading.show();
+//                new SendJoinApi(this, customLoadingProgress)
+//                        .execute(joinForm);
             }
         }
     }

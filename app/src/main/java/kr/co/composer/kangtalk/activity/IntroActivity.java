@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import kr.co.composer.kangtalk.R;
 import kr.co.composer.kangtalk.application.LoginApplication;
 import kr.co.composer.kangtalk.bo.login.LoginBO;
+import kr.co.composer.kangtalk.ui.progress.CustomLoading;
 import kr.co.composer.kangtalk.ui.progress.CustomLoadingProgress;
 import kr.co.composer.kangtalk.volley_test.VolleyTest;
 
@@ -20,7 +21,8 @@ public class IntroActivity extends BaseActivity {
     private LoginBO loginBO;
     private LoginApplication loginApplication;
     private View introView;
-    private CustomLoadingProgress customLoadingProgress;
+    private CustomLoading customLoading;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +30,7 @@ public class IntroActivity extends BaseActivity {
         setContentView(R.layout.activity_intro);
         actList.add(this);
         introView = findViewById(R.id.intro_view);
-
-        customLoadingProgress = new CustomLoadingProgress(this);
+        customLoading = new CustomLoading(this);
         loginApplication = new LoginApplication();
         new AsyncTask<Void, Void, Void>() {
             @Override
@@ -48,17 +49,10 @@ public class IntroActivity extends BaseActivity {
             }
         }.execute(new Void[0]);
 
-
-//        fManager = getSupportFragmentManager();
-//        FragmentTransaction fTransaction = fManager.beginTransaction();
-//        if(fTransaction.isEmpty()){
-//            fTransaction.add(R.id.container, new StartFragment()).addToBackStack(null).commit();
-//        }
     }
 
     private void loginTask() {
         if (loginApplication.hasRememberMeCookie() == true) {
-            customLoadingProgress.show();
             login();
         } else {
             redirectAndFinish(IntroActivity.this, LoginActivity.class);
@@ -67,7 +61,7 @@ public class IntroActivity extends BaseActivity {
 
     private void login(){
         // 자동로그인쿠키 갱신과 유저정보 얻어오기 구현
-        new VolleyTest(IntroActivity.this,customLoadingProgress).autoLogin();
+        new VolleyTest(IntroActivity.this,customLoading).autoLogin();
     }
 
     @Override

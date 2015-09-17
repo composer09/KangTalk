@@ -6,8 +6,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import kr.co.composer.kangtalk.R;
-import kr.co.composer.kangtalk.ui.progress.CustomLoadingProgress;
 import kr.co.composer.kangtalk.bo.join.JoinForm;
+import kr.co.composer.kangtalk.ui.progress.CustomLoading;
+import kr.co.composer.kangtalk.ui.progress.CustomLoadingProgress;
 import kr.co.composer.kangtalk.utils.FormUtil;
 import kr.co.composer.kangtalk.volley_test.VolleyTest;
 
@@ -15,7 +16,7 @@ import kr.co.composer.kangtalk.volley_test.VolleyTest;
  * A placeholder fragment containing a simple view.
  */
 public class LoginActivity extends BaseActivity {
-    CustomLoadingProgress customLoadingProgress;
+    CustomLoading customLoading;
 
     public LoginActivity() {
     }
@@ -28,7 +29,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void init(){
-        customLoadingProgress = new CustomLoadingProgress(LoginActivity.this);
+        customLoading = new CustomLoading(LoginActivity.this);
         Button submitButton = (Button)findViewById(R.id.login_submit_btn);
         Button goJoinButton = (Button)findViewById(R.id.goJoinBtn);
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -50,8 +51,8 @@ public class LoginActivity extends BaseActivity {
         if (joinForm.getUserId().length() == 0 || joinForm.getPassword().length() == 0 ){
             Toast.makeText(this, "아이디와 패스워드를 입력해주세요.", Toast.LENGTH_SHORT).show();
         } else {
-            customLoadingProgress.show();
-            new VolleyTest(this, customLoadingProgress).login(joinForm);
+            customLoading.show();
+            new VolleyTest(this, customLoading).login(joinForm);
         }
     }
 
