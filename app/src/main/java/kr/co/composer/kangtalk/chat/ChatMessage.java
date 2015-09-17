@@ -7,40 +7,50 @@ public class ChatMessage {
     private long id;
     private boolean isMe;
     private String message;
-    private Long userId;
+    private String userId;
     private String dateTime;
 
-    public long getId() {
-        return id;
-    }
-    public void setId(long id) {
-        this.id = id;
-    }
-    public boolean getIsme() {
-        return isMe;
-    }
-    public void setMe(boolean isMe) {
-        this.isMe = isMe;
-    }
-    public String getMessage() {
-        return message;
-    }
-    public void setMessage(String message) {
-        this.message = message;
-    }
-    public long getUserId() {
-        return userId;
-    }
+    //setter
 
-    public void setUserId(long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public String getDate() {
-        return dateTime;
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setMe(boolean isMe) {
+        this.isMe = isMe;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public void setDate(String dateTime) {
         this.dateTime = dateTime;
     }
+
+    //getter
+    public String getUserId() {
+        return userId;
+    }
+
+    public long getId() {
+        return id;
+    }
+    public boolean getIsme() {
+        return isMe;
+    }
+    public String getMessage() {
+        return message;
+    }
+
+
+    public String getDate() {
+        return dateTime;
+    }
+
+
 }
