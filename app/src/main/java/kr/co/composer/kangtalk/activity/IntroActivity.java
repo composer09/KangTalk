@@ -12,9 +12,9 @@ import android.view.animation.Animation;
 import kr.co.composer.kangtalk.R;
 import kr.co.composer.kangtalk.application.LoginApplication;
 import kr.co.composer.kangtalk.bo.login.LoginBO;
+import kr.co.composer.kangtalk.api.ApiCaller;
+import kr.co.composer.kangtalk.api.AutoApi;
 import kr.co.composer.kangtalk.ui.progress.CustomLoading;
-import kr.co.composer.kangtalk.ui.progress.CustomLoadingProgress;
-import kr.co.composer.kangtalk.volley_test.VolleyTest;
 
 public class IntroActivity extends BaseActivity {
     private FragmentManager fManager;
@@ -61,7 +61,8 @@ public class IntroActivity extends BaseActivity {
 
     private void login(){
         // 자동로그인쿠키 갱신과 유저정보 얻어오기 구현
-        new VolleyTest(IntroActivity.this,customLoading).autoLogin();
+//        new OldApi(IntroActivity.this,customLoading).autoLogin(null);
+        new ApiCaller(new AutoApi(),this,customLoading,null);
     }
 
     @Override

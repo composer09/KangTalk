@@ -3,5 +3,6 @@
     <string name="config">Config</string>
     <string name="logout_message">"자동로그인을 해제하시겠습니까?"</string>
     <string name="main_text">Kang Talk</string>
+    <string name="chat_activity_title">Chat</string>
     <string name="action_settings">Settings</string>
 </resources>

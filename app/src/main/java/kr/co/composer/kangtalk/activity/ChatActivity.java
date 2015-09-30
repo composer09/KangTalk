@@ -1,5 +1,7 @@
 package kr.co.composer.kangtalk.activity;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -28,10 +30,12 @@ import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import kr.co.composer.kangtalk.R;
 import kr.co.composer.kangtalk.adapter.ChatAdapter;
 import kr.co.composer.kangtalk.chat.ChatMessage;
+import kr.co.composer.kangtalk.chat.ChatNotification;
 import kr.co.composer.kangtalk.pref.UserPreferenceManager;
 import kr.co.composer.kangtalk.properties.PreferenceProperties;
 
@@ -40,6 +44,7 @@ import kr.co.composer.kangtalk.properties.PreferenceProperties;
  */
 public class ChatActivity extends BaseActivity {
 
+    private static final String CURRENT_ACTIVITY = "kr.co.composer.kangtalk.activity.ChatActivity";
     private EditText messageET;
     private ListView messagesContainer;
     private Button sendBtn;
@@ -47,8 +52,9 @@ public class ChatActivity extends BaseActivity {
     private ArrayList<ChatMessage> chatHistory;
     private TextView yourName;
     //////////////
-    private Socket mSocket;
+    private Socket socket;
     private String userID;
+    private ChatNotification chatNotification;
 
 
     @Override
@@ -56,17 +62,7 @@ public class ChatActivity extends BaseActivity {
         actList.add(this); // 액티비티 일괄제거용 미리등록
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_activity);
-        userID = UserPreferenceManager.getInstance().getUserId();
-        try {
-            mSocket = IO.socket(PreferenceProperties.IP_ADDRESS_SOCKET);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        mSocket.connect();
-        mSocket.on("serverMessage", onNewMessage);
-        //////////////////////////////
         init();
-        Log.i("로그인 유저 확인", UserPreferenceManager.getInstance().getUserId());
     }
 
     private Emitter.Listener onNewMessage = new Emitter.Listener() {
@@ -76,8 +72,13 @@ public class ChatActivity extends BaseActivity {
                 @Override
                 public void run() {
                     try {
-                        Log.i("통신 데이터확인", chatMessage[0] + "");
                         JSONObject data = (JSONObject) chatMessage[0];
+                        if (!CURRENT_ACTIVITY.equals(getRunActivity())) {
+                            chatNotification.setNoti(data.getString("userId")
+                                    , data.getString("message"));
+                            Log.i("현재실행여부확인", getRunActivity());
+                        }
+                        Log.i("input 데이터확인", chatMessage[0] + "");
                         yourName.setText(data.getString("userId"));
                         ChatMessage message = new ChatMessage();
                         message.setUserId(data.getString("userId"));
@@ -104,6 +105,23 @@ public class ChatActivity extends BaseActivity {
     };
 
     private void init() {
+        getSupportActionBar().setTitle(R.string.chat_activity_title);
+        chatNotification = new ChatNotification(this);
+        userID = UserPreferenceManager.getInstance().getUserId();
+        try {
+            socket = IO.socket(PreferenceProperties.IP_ADDRESS_SOCKET);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        socket.connect();
+        socket.on("serverMessage", onNewMessage);
+        //////////////////////////////
+        initHandler();
+        Log.i("로그인 유저 확인", UserPreferenceManager.getInstance().getUserId());
+
+    }
+
+    private void initHandler() {
         messagesContainer = (ListView) findViewById(R.id.messagesContainer);
         messageET = (EditText) findViewById(R.id.messageEdit);
         sendBtn = (Button) findViewById(R.id.chatSendButton);
@@ -111,11 +129,10 @@ public class ChatActivity extends BaseActivity {
         adapter = new ChatAdapter(ChatActivity.this, new ArrayList<ChatMessage>());
         messagesContainer.setAdapter(adapter);
 
-//        loadDummyHistory();
-
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String messageText = messageET.getText().toString();
                 if (TextUtils.isEmpty(messageText)) {
                     return;
@@ -134,7 +151,7 @@ public class ChatActivity extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                mSocket.emit("clientMessage", jsonObject);
+                socket.emit("clientMessage", jsonObject);
                 messageET.setText("");
 
                 displayMessage(chatMessage);
@@ -152,30 +169,11 @@ public class ChatActivity extends BaseActivity {
         messagesContainer.setSelection(messagesContainer.getCount() - 1);
     }
 
-    private void loadDummyHistory() {
 
-        chatHistory = new ArrayList<ChatMessage>();
-
-        ChatMessage msg = new ChatMessage();
-        msg.setId(1);
-        msg.setMe(false);
-        msg.setMessage("Hi");
-        msg.setDate(DateFormat.getDateTimeInstance().format(new Date()));
-        chatHistory.add(msg);
-        ChatMessage msg1 = new ChatMessage();
-        msg1.setId(2);
-        msg1.setMe(false);
-        msg1.setMessage("How r u doing???");
-        msg1.setDate(DateFormat.getDateTimeInstance().format(new Date()));
-        chatHistory.add(msg1);
-
-
-
-        for (int i = 0; i < chatHistory.size(); i++) {
-            ChatMessage message = chatHistory.get(i);
-            displayMessage(message);
-        }
-
+    @Override
+    protected void onResume() {
+        chatNotification.cancel();
+        super.onResume();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -192,5 +190,23 @@ public class ChatActivity extends BaseActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    String getRunActivity() {
+        ActivityManager activity_manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> task_info = activity_manager.getRunningTasks(9999);
+        return task_info.get(0).topActivity.getClassName();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        removeActivity();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        socket.disconnect();
     }
 }

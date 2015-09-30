@@ -2,6 +2,7 @@ package kr.co.composer.kangtalk.ui.progress;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
@@ -18,7 +19,6 @@ public class CustomLoading {
         this.context = context;
     }
     public void show(){
-
         if (m_loadingDialog == null) {
             //다이얼로그가 없으면 만들고 보이게 하라
             m_loadingDialog = new Dialog(context, R.style.custom_loading);
@@ -28,6 +28,8 @@ public class CustomLoading {
                     ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             //프로그래스를 다이얼로그에 포함하자
             m_loadingDialog.setContentView(pb, params);
+            m_loadingDialog.getWindow().setBackgroundDrawable
+                    (new ColorDrawable(android.graphics.Color.TRANSPARENT));
             m_loadingDialog.setCancelable(false);
             m_loadingDialog.show();
         } else if(!m_loadingDialog.isShowing()){
@@ -38,6 +40,8 @@ public class CustomLoading {
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             m_loadingDialog.setContentView(pb, params);
+            m_loadingDialog.getWindow().setBackgroundDrawable
+                    (new ColorDrawable(android.graphics.Color.TRANSPARENT));
             m_loadingDialog.setCancelable(false);
             m_loadingDialog.show();
         }

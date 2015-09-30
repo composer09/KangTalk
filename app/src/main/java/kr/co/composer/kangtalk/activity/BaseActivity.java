@@ -15,6 +15,13 @@ import kr.co.composer.kangtalk.R;
 public class BaseActivity extends AppCompatActivity {
     public static ArrayList<Activity> actList = new ArrayList<Activity>();
 
+    public static void removeActivity(){
+        for(Activity activity: actList){
+            activity.finish();
+        }
+    }
+
+
     public void redirectActivity(Context context, Class nextActivity) {
         Intent intent = new Intent(context, nextActivity);
         startActivity(intent);
